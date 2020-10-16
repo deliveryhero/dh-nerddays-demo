@@ -48,8 +48,8 @@ module "atlantis" {
   public_subnets  = [for index, az in data.aws_availability_zones.azs.names : cidrsubnet("10.50.0.0/16", 8, (index + 101))]
 
   # ECS
-  ecs_task_cpu    = 2000
-  ecs_task_memory = 2048
+  ecs_task_cpu    = 2048
+  ecs_task_memory = 4096
 
   # DNS (without trailing dot)
   route53_zone_name = "atlantis-dh-nerddays-demo.com"
