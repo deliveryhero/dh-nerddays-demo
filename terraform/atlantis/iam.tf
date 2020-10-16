@@ -28,7 +28,7 @@ data "aws_iam_policy_document" "atlantis-extra-policy" {
     effect = "Allow"
     resources = ["*"]
     actions = [
-        "acm:DescribeCertificate",
+        "acm:*",
         "cloudwatch:*",
         "dynamodb:CreateTable",
         "dynamodb:CreateGlobalTable",
@@ -65,6 +65,7 @@ data "aws_iam_policy_document" "atlantis-extra-policy" {
         "elasticfilesystem:DeleteMountTarget",
         "elasticfilesystem:TagResource",
         "elasticfilesystem:UntagResource",
+        "elasticloadbalancing:*",
         "es:*",
         "iam:AttachRolePolicy",
         "iam:DetachRolePolicy",
