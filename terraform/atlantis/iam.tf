@@ -16,7 +16,9 @@ data "aws_iam_policy_document" "atlantis-extra-policy" {
     effect = "Allow"
     resources = [
       module.terraform-s3-bucket.this_s3_bucket_arn,
-      "${module.terraform-s3-bucket.this_s3_bucket_arn}/*"
+      "${module.terraform-s3-bucket.this_s3_bucket_arn}/*",
+      module.atlantis-access-log-bucket.this_s3_bucket_arn,
+      "${module.atlantis-access-log-bucket.this_s3_bucket_arn}/*"
     ]
     actions = ["s3:*"]
   }
@@ -26,6 +28,7 @@ data "aws_iam_policy_document" "atlantis-extra-policy" {
     effect = "Allow"
     resources = ["*"]
     actions = [
+        "acm:DescribeCertificate",
         "cloudwatch:*",
         "dynamodb:CreateTable",
         "dynamodb:CreateGlobalTable",
