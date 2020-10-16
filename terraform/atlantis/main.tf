@@ -77,6 +77,10 @@ module "atlantis" {
     {
       name  = "ATLANTIS_WRITE_GIT_CREDS"
       value = "1"
+    },
+    {
+      name  = "ATLANTIS_DEFAULT_TF_VERSION"
+      value = "0.13.4"
     }
 //    {
 //      name  = "GIT_SSH_COMMAND"
