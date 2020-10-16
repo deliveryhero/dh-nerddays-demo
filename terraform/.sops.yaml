@@ -1,0 +1,9 @@
+sops:
+  kms:
+  - arn: 'arn:aws:kms:eu-central-1:923749771369:key/b1fd7747-cbbe-43e0-98e7-985d2b2cc39f'
+    aws_profile: 'dh-nerddays-demo'
+
+creation_rules:
+- path_regex: atlantis/secrets.*\.yaml$
+  kms: 'arn:aws:kms:eu-central-1:923749771369:key/b1fd7747-cbbe-43e0-98e7-985d2b2cc39f'
+  aws_profile: 'dh-nerddays-demo'
