@@ -66,10 +66,23 @@ module "atlantis" {
   atlantis_github_user_token  = data.sops_file.atlantis-secrets.data["github.token"]
   atlantis_repo_whitelist     = ["github.com/${data.sops_file.atlantis-secrets.data["github.organization"]}/*"]
   atlantis_allowed_repo_names = ["dh-nerddays-demo"]
+  custom_environment_secrets  = [
+    {
+      name = "GIT_SSH_PRIVATE_KEY"
+      valueFrom = aws_ssm_parameter.atlantis-github-ssh-key.name
+    }
+  ]
 
   tags = local.tags
 }
 
+resource "aws_ssm_parameter" "atlantis-github-ssh-key" {
+  name  = "/atlantis/github/user/ssh-key"
+  type  = "SecureString"
+  value = data.sops_file.atlantis-secrets.data["github.ssh-key"]
+
+  tags = local.tags
+}
 
 ################################################################################
 # GitHub Webhooks
