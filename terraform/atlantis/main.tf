@@ -81,8 +81,8 @@ module "atlantis" {
       value = "0.13.4"
     },
     {
-      name  = "ATLANTIS_REPO_CONFIG"
-      value = data.local_file.atlantis-config.content
+      name  = "ATLANTIS_REPO_CONFIG_JSON"
+      value = jsonencode(data.local_file.atlantis-config.content)
     }
   ]
 
