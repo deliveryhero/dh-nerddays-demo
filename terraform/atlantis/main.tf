@@ -68,10 +68,19 @@ module "atlantis" {
   atlantis_allowed_repo_names = ["dh-nerddays-demo"]
   custom_environment_secrets  = [
     {
-      name = "GIT_SSH_PRIVATE_KEY"
+      name      = "GIT_SSH_PRIVATE_KEY"
       valueFrom = aws_ssm_parameter.atlantis-github-ssh-key.name
     }
   ]
+
+  custom_environment_variables = [
+    {
+      name  = "GIT_SSH_COMMAND"
+      value = "ssh -i /home/atlantis/.ss/atlantis_demo_rsa.pem -o 'StrictHostKeyChecking no'"
+    }
+  ]
+
+  entrypoint = ["echo", "$GIT_SSH_PRIVATE_KEY", ">", "/home/atlantis/.ss/atlantis_demo_rsa.pem", "&&", "docker-entrypoint.sh", "server" ]
 
   tags = local.tags
 }
