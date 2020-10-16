@@ -77,10 +77,9 @@ module "atlantis" {
       value = "0.13.4"
     },
     {
-      name  = "ATLANTIS_LOG_LEVEL"
-      value = "debug"
+      name  = "ATLANTIS_REPO_CONFIG"
+      value = data.local_file.atlantis-config.content
     }
-
   ]
 
   tags = local.tags

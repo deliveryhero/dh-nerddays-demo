@@ -1,0 +1,10 @@
+version: 3
+automerge: true
+projects:
+  - name: atlantis
+    dir: terraform/atlantis
+    terraform_version: v0.13.4
+    autoplan:
+      when_modified: ["*.tf"]
+      enabled: true
+    apply_requirements: []
