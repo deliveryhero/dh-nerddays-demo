@@ -76,11 +76,11 @@ module "atlantis" {
   custom_environment_variables = [
     {
       name  = "GIT_SSH_COMMAND"
-      value = "ssh -i /home/atlantis/.ss/atlantis_demo_rsa.pem -o 'StrictHostKeyChecking no'"
+      value = "ssh -i ~/.ssh/atlantis_demo_rsa.pem -o 'StrictHostKeyChecking no'"
     }
   ]
 
-  entrypoint = ["echo", "$GIT_SSH_PRIVATE_KEY", ">", "/home/atlantis/.ss/atlantis_demo_rsa.pem", "&&", "docker-entrypoint.sh", "server" ]
+  entrypoint = ["echo", "$GIT_SSH_PRIVATE_KEY", ">", "~/.ssh/atlantis_demo_rsa.pem", "&&", "docker-entrypoint.sh", "server" ]
 
   tags = local.tags
 }
