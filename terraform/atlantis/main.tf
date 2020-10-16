@@ -24,25 +24,6 @@ module "atlantis-route53-zone" {
   }
 }
 
-module "atlantis-route53-records" {
-  source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "1.2.0"
-
-  zone_name = keys(module.atlantis-route53-zone.this_route53_zone_zone_id)[0]
-
-  records = [
-    {
-      name    = "ui"
-      type    = "CNAME"
-      records = [module.atlantis.alb_dns_name]
-      ttl     = 60
-    }
-  ]
-
-  depends_on = [module.atlantis-route53-zone, module.atlantis]
-}
-
-
 ##########
 # DH IPs #
 ##########
