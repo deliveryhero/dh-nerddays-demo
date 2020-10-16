@@ -43,4 +43,22 @@ data "aws_iam_policy_document" "atlantis-kms-key-policy" {
       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/FederatedAdministratorRole"]
     }
   }
+
+  statement {
+    sid     = "Allow Atlantis Role to use the KMS key"
+    actions = [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey",
+      ]
+    effect  = "Allow"
+    resources = ["*"]
+
+    principals {
+      type = "AWS"
+      identifiers = [module.atlantis.task_role_arn]
+    }
+  }
 }
