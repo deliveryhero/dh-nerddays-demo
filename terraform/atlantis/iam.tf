@@ -1,17 +1,5 @@
 data "aws_iam_policy_document" "atlantis-extra-policy" {
   statement {
-    sid    = "AccessToGithubSSHKeyParameter"
-    effect = "Allow"
-
-    resources = [ aws_ssm_parameter.atlantis-github-ssh-key-secret.arn ]
-
-    actions = [
-      "ssm:GetParameters",
-      "secretsmanager:GetSecretValue",
-    ]
-  }
-
-  statement {
     sid    = "AccessToTFStateS3Bucket"
     effect = "Allow"
     resources = [

@@ -66,12 +66,6 @@ module "atlantis" {
   atlantis_github_user_token  = data.sops_file.atlantis-secrets.data["github.token"]
   atlantis_repo_whitelist     = ["github.com/${data.sops_file.atlantis-secrets.data["github.organization"]}/*"]
   atlantis_allowed_repo_names = ["dh-nerddays-demo"]
-  custom_environment_secrets  = [
-    {
-      name      = "GIT_SSH_PRIVATE_KEY"
-      valueFrom = aws_ssm_parameter.atlantis-github-ssh-key-secret.name
-    }
-  ]
 
   custom_environment_variables = [
     {
@@ -82,21 +76,7 @@ module "atlantis" {
       name  = "ATLANTIS_DEFAULT_TF_VERSION"
       value = "0.13.4"
     }
-//    {
-//      name  = "GIT_SSH_COMMAND"
-//      value = "ssh -i ~/.ssh/atlantis_demo_rsa.pem -o 'StrictHostKeyChecking no'"
-//    }
   ]
-
-//  command = ["/bin/sh", "-c", "echo", "$GIT_SSH_PRIVATE_KEY", ">", "~/.ssh/atlantis_demo_rsa.pem", "&&", "docker-entrypoint.sh", "server" ]
-
-  tags = local.tags
-}
-
-resource "aws_ssm_parameter" "atlantis-github-ssh-key-secret" {
-  name  = "/atlantis/github/user/ssh-key"
-  type  = "SecureString"
-  value = data.sops_file.atlantis-secrets.data["github.ssh-key"]
 
   tags = local.tags
 }
