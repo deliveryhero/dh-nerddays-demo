@@ -18,11 +18,7 @@ data "aws_iam_policy_document" "atlantis-extra-policy" {
       module.terraform-s3-bucket.this_s3_bucket_arn,
       "${module.terraform-s3-bucket.this_s3_bucket_arn}/*"
     ]
-    actions = [
-        "s3:ListBucket",
-        "s3:GetObject",
-        "s3:PutObject"
-    ]
+    actions = ["s3:*"]
   }
 
   statement {
@@ -56,6 +52,7 @@ data "aws_iam_policy_document" "atlantis-extra-policy" {
         "ec2:DeleteTags",
         "ec2:*Volume*",
         "ec2:*Instance*",
+        "ecs:*",
         "elasticache:*",
         "elasticfilesystem:CreateFileSystem",
         "elasticfilesystem:DeleteFileSystem",
