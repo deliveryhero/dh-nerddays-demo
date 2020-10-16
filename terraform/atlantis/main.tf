@@ -75,7 +75,12 @@ module "atlantis" {
     {
       name  = "ATLANTIS_DEFAULT_TF_VERSION"
       value = "0.13.4"
+    },
+    {
+      name  = "ATLANTIS_LOG_LEVEL"
+      value = "debug"
     }
+
   ]
 
   tags = local.tags
