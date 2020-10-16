@@ -82,7 +82,7 @@ module "atlantis" {
     },
     {
       name  = "ATLANTIS_REPO_CONFIG_JSON"
-      value = jsonencode(data.local_file.atlantis-config.content)
+      value = jsonencode(yamldecode(data.local_file.atlantis-config.content))
     }
   ]
 
