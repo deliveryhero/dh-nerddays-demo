@@ -13,7 +13,7 @@ module "jumphost-key-pair" {
 # EC2 Instance as Jumphost #
 ############################
 module "jumphost" {
-  source = "git@github.com:deliveryhero/pd-tf-aws-jumphost?ref=v1.0.0"
+  source = "git@github.com:deliveryhero/pd-tf-aws-jumphost?ref=v1.0.2-pre"
 
   jumphost_instance_type = "t3.medium"
   ami_id                 = data.aws_ami.ubuntu-18-04.id
@@ -33,7 +33,16 @@ module "jumphost" {
       volume_type = "gp2"
     }
   ]
-  dh_berlin_office_ips    = module.dh-ips.ipv4_cidr_blocks
+
+  ssh_access_port   = 2122
+  ssh_ingress_rules = [
+    {
+      name             = "dh-ips"
+      description      = "Delivery Hero IPs"
+      ipv4_cidr_blocks = module.dh-ips.ipv4_cidr_blocks
+    }
+  ]
+
   standard_os_users       = ["developer"]
   sudo_os_users           = ["infra"]
   packages_to_install     = ["mysql-client", "pv", "redis-tools", "python3", "python3-pip", "python3-dev", "libmysqlclient-dev", "python3-mysql.connector"]
