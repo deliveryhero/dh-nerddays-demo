@@ -10,6 +10,7 @@ data "aws_subnet" "eu-central-1a" {
   tags = {
     Visibility = "public"
   }
+  depends_on = [ module.vpc ]
 }
 
 data "aws_ami" "ubuntu-18-04" {
