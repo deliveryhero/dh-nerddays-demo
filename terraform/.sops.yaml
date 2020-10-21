@@ -5,3 +5,7 @@ sops:
 creation_rules:
 - path_regex: atlantis/secrets.*\.yaml$
   kms: 'arn:aws:kms:eu-central-1:923749771369:key/14426c3b-9006-4ab7-bd08-6a2037054758'
+  
+- path_regex: shared-infrastructure/.*/secrets.*\.yaml$
+  kms: 'arn:aws:kms:eu-central-1:923749771369:key/14426c3b-9006-4ab7-bd08-6a2037054758'
+
