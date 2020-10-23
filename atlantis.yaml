@@ -11,7 +11,7 @@ projects:
 
   - name: shared-infrastructure-staging
     dir: terraform/shared-infrastructure/envs/staging
-    terraform_version: v0.13.4
+    terraform_version: v0.13.5
     autoplan:
       when_modified: [ "*.tf" ]
       enabled: true
