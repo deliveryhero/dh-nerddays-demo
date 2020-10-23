@@ -16,14 +16,17 @@ repositories:
 
 releases:
   - name: metrics-server
+    namespace: infra
     chart: stable/metrics-server
 
   - name: cluster-autoscaler
+    namespace: infra
     chart: autoscaler/cluster-autoscaler-chart
     values:
       - "../values/cluster-autoscaler.yaml"
 
   - name: nginx-ingress-controller
+    namespace: infra
     chart: ingress-nginx/ingress-nginx
     values:
       - "../values/nginx-ingress-controller.yaml"
