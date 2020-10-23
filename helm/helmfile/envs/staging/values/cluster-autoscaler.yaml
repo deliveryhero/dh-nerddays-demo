@@ -1,0 +1,16 @@
+autoDiscovery:
+  clusterName: nerddays-demo-cluster
+  tags:
+  - k8s.io/cluster-autoscaler/enabled
+  - k8s.io/cluster-autoscaler/{{ .Values.autoDiscovery.clusterName }}
+
+image:
+  repository: us.gcr.io/k8s-artifacts-prod/autoscaling/cluster-autoscaler
+  tag: v1.17.3
+
+awsRegion: eu-central-1
+
+extraArgs:
+  scale-down-utilization-threshold: 0.5
+  scale-down-delay-after-add: 2m
+  scale-down-unneeded-time: 2m
