@@ -12,15 +12,6 @@ module "jumphost-key-pair" {
 ############################
 # EC2 Instance as Jumphost #
 ############################
-data "aws_subnet" "eu-central-1a" {
-  availability_zone = "eu-central-1a"
-  vpc_id            = module.vpc.vpc_id
-  tags = {
-    Visibility = "public"
-  }
-  depends_on = [ module.vpc ]
-}
-
 data "aws_ami" "ubuntu-18-04" {
   owners = ["099720109477"]
   name_regex = "^ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-20201014$"
@@ -33,7 +24,7 @@ module "jumphost" {
   ami_id                 = data.aws_ami.ubuntu-18-04.id
   vpc_id                 = module.vpc.vpc_id
   az_subnet = {
-    eu-central-1a = data.aws_subnet.eu-central-1a.cidr_block // EBS and Instance must be in the same AZ
+    eu-central-1a = "10.100.4.0/24" // EBS and Instance must be in the same AZ
   }
   external_dns_zone_id        = data.aws_route53_zone.dh-nerddays-demo.id
   jumphost_keypair            = module.jumphost-key-pair.this_key_pair_key_name
