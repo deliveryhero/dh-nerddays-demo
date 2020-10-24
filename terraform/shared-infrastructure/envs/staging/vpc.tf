@@ -1,6 +1,3 @@
-#######
-# VPC #
-#######
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "2.47.0"
@@ -27,20 +24,4 @@ module "vpc" {
   }
 
   tags = local.tags
-}
-
-
-###############
-# VPC Peering #
-###############
-module "vpc-peering-with-atlantis-vpc" {
-  source             = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=0.6.0"
-  name               = "nerddays-demo-to-atlantis"
-  enabled            = true
-  requestor_vpc_tags = {
-    Name = module.vpc.name
-  }
-  acceptor_vpc_tags  = {
-    Name = "atlantis"
-  }
 }
