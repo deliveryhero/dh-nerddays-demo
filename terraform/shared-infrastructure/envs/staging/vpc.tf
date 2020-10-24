@@ -1,6 +1,3 @@
-#######
-# VPC #
-#######
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "2.47.0"
@@ -13,7 +10,6 @@ module "vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
-  enable_dns_support   = true
 
   public_subnet_tags = {
     Visibility                                        = "public"
@@ -29,6 +25,7 @@ module "vpc" {
 
   tags = local.tags
 }
+
 
 ###############
 # VPC Peering #
