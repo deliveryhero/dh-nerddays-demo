@@ -11,6 +11,8 @@ repositories:
   url: https://kubernetes-charts.storage.googleapis.com
 - name: autoscaler
   url: https://kubernetes.github.io/autoscaler
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
 - name: ingress-nginx
   url: https://kubernetes.github.io/ingress-nginx
 
@@ -24,6 +26,13 @@ releases:
     chart: autoscaler/cluster-autoscaler-chart
     values:
       - "../values/cluster-autoscaler.yaml"
+
+  - name: external-dns
+    namespace: infra
+    chart: bitnami/external-dns
+    values:
+      - "../values/external-dns.yaml"
+
 
   - name: nginx-ingress-controller
     namespace: infra
