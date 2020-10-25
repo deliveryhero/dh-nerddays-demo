@@ -78,6 +78,7 @@ data "aws_iam_policy_document" "atlantis-extra-policy" {
         "iam:DeleteRole",
         "iam:DeleteServiceLinkedRole",
         "iam:DeleteRolePolicy",
+        "iam:GetOpenIDConnectProvider",
         "iam:GetPolicy",
         "iam:GetPolicyVersion",
         "iam:GetUser",
