@@ -16,5 +16,5 @@ data "aws_subnet_ids" "nerddays-demo-private" {
     Visibility = "private"
   }
 
-  depends_on = [data.aws_vpc]
+  depends_on = [ data.aws_vpc.nerddays-demo ]
 }

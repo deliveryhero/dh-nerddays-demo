@@ -5,7 +5,7 @@ projects:
     dir: terraform/shared-infrastructure/envs/staging
     terraform_version: v0.13.5
     autoplan:
-      when_modified: [ "*.tf" ]
+      when_modified: [ "*.tf", "secrets.enc.yaml" ]
       enabled: true
     workflow: default
 
@@ -13,6 +13,6 @@ projects:
     dir: terraform/services/demo-service/envs/staging
     terraform_version: v0.13.5
     autoplan:
-      when_modified: [ "*.tf" ]
+      when_modified: [ "*.tf", "secrets.enc.yaml" ]
       enabled: true
     workflow: default
