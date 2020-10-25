@@ -1,0 +1,19 @@
+annotationFilter: "kubernetes.io/external-dns=true"
+
+aws:
+  region: "eu-central-1"
+
+policy: "sync"
+provider: "aws"
+publishInternalServices: true
+
+sources: ["service", "ingress"]
+
+domainFilters:
+  - dh-nerddays-demo.com
+
+txtOwnerId: "k8s-external-dns"
+
+txtPrefix: "k8s-external-dns-"
+
+zoneType: "public"

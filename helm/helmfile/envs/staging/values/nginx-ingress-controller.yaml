@@ -1,6 +1,9 @@
-
 controller:
   replicaCount: 3
+  service:
+    annotations:
+      "external-dns.alpha.kubernetes.io/hostname": "gateway.dh-nerddays-demo.com"
+      "kubernetes.io/external-dns": "true"
 
   resources:
     limits:
