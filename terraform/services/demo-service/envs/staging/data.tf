@@ -1,7 +1,7 @@
 data "aws_availability_zones" "azs" {}
 
 data "aws_route53_zone" "dh-nerddays-demo" {
-  name = "dh-nerddays-demo.com"
+  name = "internal.dh-nerddays-demo.com"
 }
 
 data "aws_vpc" "nerddays-demo" {
