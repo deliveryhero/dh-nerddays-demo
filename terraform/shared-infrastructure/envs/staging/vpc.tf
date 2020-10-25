@@ -10,6 +10,7 @@ module "vpc" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
+  enable_dns_support   = true
 
   public_subnet_tags = {
     Visibility                                        = "public"
@@ -24,4 +25,19 @@ module "vpc" {
   }
 
   tags = local.tags
+}
+
+###############
+# VPC Peering #
+###############
+module "vpc-peering-with-atlantis-vpc" {
+  source             = "git::https://github.com/cloudposse/terraform-aws-vpc-peering.git?ref=0.6.0"
+  name               = "nerddays-demo-to-atlantis"
+  enabled            = true
+  requestor_vpc_tags = {
+    Name = module.vpc.name
+  }
+  acceptor_vpc_tags  = {
+    Name = "atlantis"
+  }
 }

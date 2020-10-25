@@ -1,14 +1,6 @@
 version: 3
 automerge: true
 projects:
-  - name: atlantis
-    dir: terraform/atlantis
-    terraform_version: v0.13.4
-    autoplan:
-      when_modified: ["*.tf"]
-      enabled: false
-    apply_requirements: []
-
   - name: shared-infrastructure-staging
     dir: terraform/shared-infrastructure/envs/staging
     terraform_version: v0.13.5
