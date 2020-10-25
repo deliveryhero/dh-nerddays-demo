@@ -122,3 +122,86 @@ data "aws_iam_policy_document" "worker_autoscaling" {
     }
   }
 }
+
+###############################
+# ExternalDNS IAM Permissions #
+###############################
+data "aws_iam_policy_document" "k8s_externaldns_oidc" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+
+    condition {
+      test     = "StringEquals"
+      variable = "${module.eks.oidc_provider_arn}:sub"
+      values   = ["system:serviceaccount:infra:external-dns"]
+    }
+
+    principals {
+      identifiers = [module.eks.oidc_provider_arn]
+      type        = "Federated"
+    }
+  }
+}
+
+resource "aws_iam_role" "k8s_externaldns" {
+  assume_role_policy = data.aws_iam_policy_document.k8s_externaldns_oidc
+  name               = "k8s-external-dns"
+  path               = "/kubernetes/"
+
+  tags = local.tags
+}
+
+resource "aws_iam_role_policy_attachment" "k8s_externaldns" {
+  policy_arn = aws_iam_policy.k8s_externaldns.arn
+  role       = aws_iam_role.k8s_externaldns.name
+}
+
+resource "aws_iam_policy" "k8s_externaldns" {
+  name_prefix = "k8s-external-dns"
+  description = "AWS Role for Kubernetes External DNS"
+  policy      = data.aws_iam_policy_document.k8s_externaldns.json
+  path        = "/kubernetes/"
+}
+
+data "aws_iam_policy_document" "k8s_externaldns" {
+  statement {
+    sid    = "eksWorkerAutoscalingAll"
+    effect = "Allow"
+
+    actions = [
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeTags",
+      "ec2:DescribeLaunchTemplateVersions",
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "eksWorkerAutoscalingOwn"
+    effect = "Allow"
+
+    actions = [
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:TerminateInstanceInAutoScalingGroup",
+      "autoscaling:UpdateAutoScalingGroup",
+    ]
+
+    resources = ["*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "autoscaling:ResourceTag/kubernetes.io/cluster/${module.eks.cluster_id}"
+      values   = ["owned"]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "autoscaling:ResourceTag/k8s.io/cluster-autoscaler/enabled"
+      values   = ["true"]
+    }
+  }
+}
