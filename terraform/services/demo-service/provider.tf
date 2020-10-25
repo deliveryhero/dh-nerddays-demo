@@ -4,7 +4,7 @@ terraform {
   backend "s3" {
     encrypt = "true"
     bucket  = "dh-nerddays-terraform"
-    key     = "services/demo-service/staging.tfstate"
+    key     = "services/demo-service.tfstate"
     region  = "eu-central-1"
     profile = "dh-nerddays-demo"
   }
