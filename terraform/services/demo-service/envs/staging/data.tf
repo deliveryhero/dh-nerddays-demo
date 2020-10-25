@@ -1,7 +1,10 @@
 data "aws_availability_zones" "azs" {}
 
 data "aws_route53_zone" "dh-nerddays-demo" {
-  name = "internal.dh-nerddays-demo.com"
+  name         = "internal.dh-nerddays-demo.com"
+  private_zone = true
+
+  depends_on = [ data.aws_vpc.nerddays-demo ]
 }
 
 data "aws_vpc" "nerddays-demo" {
