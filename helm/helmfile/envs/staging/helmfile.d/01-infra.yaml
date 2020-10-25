@@ -32,10 +32,13 @@ releases:
     chart: bitnami/external-dns
     values:
       - "../values/external-dns.yaml"
-
+    secrets:
+      - "../secrets/external-dns.enc.yaml"
 
   - name: nginx-ingress-controller
     namespace: infra
     chart: ingress-nginx/ingress-nginx
     values:
       - "../values/nginx-ingress-controller.yaml"
+    secrets:
+      - "../secrets/nginx-ingress-controller.enc.yaml"
