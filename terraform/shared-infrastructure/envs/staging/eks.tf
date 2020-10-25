@@ -134,7 +134,7 @@ data "aws_iam_policy_document" "k8s_externaldns_oidc" {
 
     condition {
       test     = "StringEquals"
-      variable = "${module.eks.oidc_provider_arn}"
+      variable = "${module.eks.cluster_oidc_issuer_url}:sub"
       values   = ["system:serviceaccount:infra:external-dns"]
     }
 
