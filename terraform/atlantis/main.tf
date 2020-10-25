@@ -46,10 +46,9 @@ module "atlantis" {
   name = "atlantis"
 
   # VPC
-  cidr            = "10.50.0.0/16"
-  azs             = data.aws_availability_zones.azs.names
-  private_subnets = [for index, az in data.aws_availability_zones.azs.names : cidrsubnet("10.50.0.0/16", 8, (index + 1))]
-  public_subnets  = [for index, az in data.aws_availability_zones.azs.names : cidrsubnet("10.50.0.0/16", 8, (index + 101))]
+  vpc_id             = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.private_subnets
+  public_subnet_ids  = module.vpc.public_subnets
 
   # ECS
   ecs_task_cpu    = 2048
