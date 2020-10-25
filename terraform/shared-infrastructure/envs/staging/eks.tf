@@ -24,6 +24,7 @@ module "eks" {
   cluster_name    = local.eks_cluster_name
   cluster_version = "1.17"
   subnets         = module.vpc.private_subnets
+  enable_irsa     = true
 
   tags = merge(local.tags,
          {
@@ -166,42 +167,24 @@ resource "aws_iam_policy" "k8s_externaldns" {
 
 data "aws_iam_policy_document" "k8s_externaldns" {
   statement {
-    sid    = "eksWorkerAutoscalingAll"
-    effect = "Allow"
-
+    sid     = "AllowUpdateRoute53Zone"
+    effect  = "Allow"
     actions = [
-      "autoscaling:DescribeAutoScalingGroups",
-      "autoscaling:DescribeAutoScalingInstances",
-      "autoscaling:DescribeLaunchConfigurations",
-      "autoscaling:DescribeTags",
-      "ec2:DescribeLaunchTemplateVersions",
+      "route53:ChangeResourceRecordSets"
     ]
-
-    resources = ["*"]
+    resources = [
+      "arn:aws:route53:::hostedzone/Z061833026M6AGLS3ML64",
+      "arn:aws:route53:::hostedzone/Z00425511KNMOW9YGLJLL"
+    ]
   }
 
   statement {
-    sid    = "eksWorkerAutoscalingOwn"
-    effect = "Allow"
-
+    sid     = "ListAllRoute53Zones"
+    effect  = "Allow"
     actions = [
-      "autoscaling:SetDesiredCapacity",
-      "autoscaling:TerminateInstanceInAutoScalingGroup",
-      "autoscaling:UpdateAutoScalingGroup",
+      "route53:ListHostedZones",
+      "route53:ListResourceRecordSets"
     ]
-
     resources = ["*"]
-
-    condition {
-      test     = "StringEquals"
-      variable = "autoscaling:ResourceTag/kubernetes.io/cluster/${module.eks.cluster_id}"
-      values   = ["owned"]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "autoscaling:ResourceTag/k8s.io/cluster-autoscaler/enabled"
-      values   = ["true"]
-    }
   }
 }
