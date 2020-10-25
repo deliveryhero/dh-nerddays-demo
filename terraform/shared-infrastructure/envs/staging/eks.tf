@@ -146,7 +146,7 @@ data "aws_iam_policy_document" "k8s_externaldns_oidc" {
 }
 
 resource "aws_iam_role" "k8s_externaldns" {
-  assume_role_policy = data.aws_iam_policy_document.k8s_externaldns_oidc
+  assume_role_policy = data.aws_iam_policy_document.k8s_externaldns_oidc.json
   name               = "k8s-external-dns"
   path               = "/kubernetes/"
 
