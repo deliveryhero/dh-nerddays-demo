@@ -24,6 +24,7 @@ module "eks" {
   cluster_name    = local.eks_cluster_name
   cluster_version = "1.17"
   subnets         = module.vpc.private_subnets
+  enable_irsa     = true
 
   tags = merge(local.tags,
          {
@@ -120,5 +121,70 @@ data "aws_iam_policy_document" "worker_autoscaling" {
       variable = "autoscaling:ResourceTag/k8s.io/cluster-autoscaler/enabled"
       values   = ["true"]
     }
+  }
+}
+
+###############################
+# ExternalDNS IAM Permissions #
+###############################
+data "aws_iam_policy_document" "k8s_externaldns_oidc" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(module.eks.cluster_oidc_issuer_url, "https://", "")}:sub"
+      values   = ["system:serviceaccount:infra:external-dns"]
+    }
+
+    principals {
+      identifiers = [module.eks.oidc_provider_arn]
+      type        = "Federated"
+    }
+  }
+}
+
+resource "aws_iam_role" "k8s_externaldns" {
+  assume_role_policy = data.aws_iam_policy_document.k8s_externaldns_oidc.json
+  name               = "k8s-external-dns"
+  path               = "/kubernetes/"
+
+  tags = local.tags
+}
+
+resource "aws_iam_role_policy_attachment" "k8s_externaldns" {
+  policy_arn = aws_iam_policy.k8s_externaldns.arn
+  role       = aws_iam_role.k8s_externaldns.name
+}
+
+resource "aws_iam_policy" "k8s_externaldns" {
+  name_prefix = "k8s-external-dns"
+  description = "AWS Role for Kubernetes External DNS"
+  policy      = data.aws_iam_policy_document.k8s_externaldns.json
+  path        = "/kubernetes/"
+}
+
+data "aws_iam_policy_document" "k8s_externaldns" {
+  statement {
+    sid     = "AllowUpdateRoute53Zone"
+    effect  = "Allow"
+    actions = [
+      "route53:ChangeResourceRecordSets"
+    ]
+    resources = [
+      "arn:aws:route53:::hostedzone/Z061833026M6AGLS3ML64",
+      "arn:aws:route53:::hostedzone/Z00425511KNMOW9YGLJLL"
+    ]
+  }
+
+  statement {
+    sid     = "ListAllRoute53Zones"
+    effect  = "Allow"
+    actions = [
+      "route53:ListHostedZones",
+      "route53:ListResourceRecordSets"
+    ]
+    resources = ["*"]
   }
 }
