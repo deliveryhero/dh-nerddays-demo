@@ -1,16 +1,16 @@
 version: 3
 automerge: true
 projects:
-  - name: shared-infrastructure-staging
-    dir: terraform/shared-infrastructure/envs/staging
+  - name: shared-infrastructure
+    dir: terraform/shared-infrastructure
     terraform_version: v0.13.5
     autoplan:
       when_modified: [ "*.tf", "secrets.enc.yaml" ]
       enabled: true
     workflow: default
 
-  - name: demo-service-staging
-    dir: terraform/services/demo-service/envs/staging
+  - name: demo-service
+    dir: terraform/services/demo-service
     terraform_version: v0.13.5
     autoplan:
       when_modified: [ "*.tf", "secrets.enc.yaml" ]
