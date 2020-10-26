@@ -5,7 +5,10 @@ controller:
       "external-dns.alpha.kubernetes.io/hostname": "gateway.dh-nerddays-demo.com"
       "kubernetes.io/external-dns": "true"
       "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled": "True"
-      "service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy": "ELBSecurityPolicy-TLS-1-2-2017-01"
+      "service.beta.kubernetes.io/aws-load-balancer-backend-protocol": "http"
+      "service.beta.kubernetes.io/aws-load-balancer-connection-draining-enabled": "True"
+      "service.beta.kubernetes.io/aws-load-balancer-connection-draining-timeout": "60"
+      "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout": "60"
 
   resources:
     limits:
