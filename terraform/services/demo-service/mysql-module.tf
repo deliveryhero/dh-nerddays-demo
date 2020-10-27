@@ -5,8 +5,11 @@ resource "mysql_database" "test_demo_service" {
   name     = each.value
 }
 
-module "mysql_user" {
+module "mysql_users" {
   source   = "../../modules/mysql-users"
+  providers = {
+    mysql = mysql
+  }
   for_each = { for user in yamldecode(data.sops_file.secrets.raw).test.users : user.username => user }
 
   username     = each.key

@@ -29,8 +29,7 @@ provider "aws" {
 provider "sops" {}
 
 provider "mysql" {
-  alias    = "demo-service"
-  endpoint = format("%s:3306", module.aurora_mysql.this_rds_cluster_endpoint)
-  username = data.sops_file.secrets.data["aurora-mysql.root-credentials.user"]
-  password = data.sops_file.secrets.data["aurora-mysql.root-credentials.password"]
+  endpoint = local.mysql_provider.endpoint
+  username = local.mysql_provider.username
+  password = local.mysql_provider.password
 }

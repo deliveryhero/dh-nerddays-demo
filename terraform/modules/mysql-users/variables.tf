@@ -20,3 +20,18 @@ variable "privileges" {
     grants   = list(string)
   }))
 }
+
+//variable "mysql_provider_endpoint" {
+//  description = "Endpoint to set in the MySQL provider"
+//  type        = string
+//}
+//
+//variable "mysql_provider_username" {
+//  description = "Username to set in the MySQL provider"
+//  type        = string
+//}
+//
+//variable "mysql_provider_password" {
+//  description = "Password to set in the MySQL provider"
+//  type        = string
+//}
