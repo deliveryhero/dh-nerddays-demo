@@ -14,6 +14,10 @@ terraform {
       source = "carlpett/sops"
       version = "0.5.2"
     }
+    mysql = {
+      source  = "terraform-providers/mysql"
+      version = "1.9.0"
+    }
   }
 }
 
@@ -26,7 +30,7 @@ provider "sops" {}
 
 provider "mysql" {
   alias    = "demo-service"
-  endpoint = module.aurora_mysql.this_rds_cluster_endpoint
+  endpoint = format("%s:3306", module.aurora_mysql.this_rds_cluster_endpoint)
   username = data.sops_file.secrets.data["aurora-mysql.root-credentials.user"]
   password = data.sops_file.secrets.data["aurora-mysql.root-credentials.password"]
 }
