@@ -1,7 +1,7 @@
 ###############
 # MySQL Users #
 ###############
-resource "mysql_user" "test_demo_service" {
+resource "mysql_user" "user" {
   user               = var.username
   plaintext_password = var.password
   host               = var.host
@@ -10,10 +10,12 @@ resource "mysql_user" "test_demo_service" {
 ####################
 # MySQL Privileges #
 ####################
-resource "mysql_grant" "test_demo_service" {
+resource "mysql_grant" "grants" {
   for_each   = { for privilege in var.privileges: privilege.database => privilege }
   user       = var.username
   host       = var.host
   database   = each.key
   privileges = each.value.grants
+
+  depends_on = [mysql_user.user]
 }
