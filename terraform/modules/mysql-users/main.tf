@@ -11,7 +11,7 @@ resource "mysql_user" "test_demo_service" {
 # MySQL Privileges #
 ####################
 resource "mysql_grant" "test_demo_service" {
-  for_each   = { for database in var.privileges : database.database => database }
+  for_each   = { for privilege in var.privileges: privilege.database => privilege }
   user       = var.username
   host       = var.host
   database   = each.key

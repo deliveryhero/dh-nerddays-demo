@@ -5,6 +5,8 @@ locals {
     password = data.sops_file.secrets.data["aurora-mysql.root-credentials.password"]
   }
 
+  mysql_secrets = yamldecode(data.sops_file.secrets.raw)
+
   tags = {
     Environment = "demo"
     Region      = "eu"

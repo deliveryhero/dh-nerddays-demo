@@ -14,24 +14,9 @@ variable "host" {
 }
 
 variable "privileges" {
-  description = "List of privileges for the user"
+  description = "List of privileges for the MySQL user"
   type        = list(object({
     database = string
     grants   = list(string)
   }))
 }
-
-//variable "mysql_provider_endpoint" {
-//  description = "Endpoint to set in the MySQL provider"
-//  type        = string
-//}
-//
-//variable "mysql_provider_username" {
-//  description = "Username to set in the MySQL provider"
-//  type        = string
-//}
-//
-//variable "mysql_provider_password" {
-//  description = "Password to set in the MySQL provider"
-//  type        = string
-//}
