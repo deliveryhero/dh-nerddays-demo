@@ -15,4 +15,4 @@ projects:
     autoplan:
       when_modified: [ "*.tf", "secrets.enc.yaml" ]
       enabled: true
-    workflow: default
+    apply_requirements: []
