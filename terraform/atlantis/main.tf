@@ -20,6 +20,10 @@ module "atlantis-route53-zone" {
     "atlantis-dh-nerddays-demo.com" = {
       comment = "Atlantis Domain for DH NerdDays Demo"
       tags = local.tags
+    },
+    "dh-nerddays-demo.com" = {
+      comment = "Domain for DH NerdDays Demo"
+      tags = local.tags
     }
   }
 }
