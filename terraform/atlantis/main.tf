@@ -20,10 +20,6 @@ module "atlantis-route53-zone" {
     "atlantis-dh-nerddays-demo.com" = {
       comment = "Atlantis Domain for DH NerdDays Demo"
       tags = local.tags
-    },
-    "dh-nerddays-demo.com" = {
-      comment = "Domain for DH NerdDays Demo"
-      tags = local.tags
     }
   }
 }
@@ -55,7 +51,7 @@ module "atlantis" {
   ecs_task_memory = 4096
 
   # DNS (without trailing dot)
-  route53_zone_name = "dh-nerddays-demo.com"
+  route53_zone_name = "atlantis-dh-nerddays-demo.com"
 
   # ALB access
   alb_ingress_cidr_blocks         = module.dh-ips.ipv4_cidr_blocks
