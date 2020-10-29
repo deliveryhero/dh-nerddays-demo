@@ -41,3 +41,19 @@ resource "aws_rds_cluster_parameter_group" "aurora_mysql_57_cluster_parameter_gr
   family      = "aurora-mysql5.7"
   description = "Demo Service - Aurora Cluster Parameter Group for Mysql 5.7"
 }
+
+resource "aws_route53_record" "aurora_mysql_writer" {
+  name    = "aurora-mysql.writer"
+  type    = "CNAME"
+  ttl     = "60"
+  zone_id = data.aws_route53_zone.internal-dh-nerddays-demo.id
+  records = [module.aurora_mysql.this_rds_cluster_endpoint]
+}
+
+resource "aws_route53_record" "aurora_mysql_reader" {
+  name    = "aurora-mysql.reader"
+  type    = "CNAME"
+  ttl     = "60"
+  zone_id = data.aws_route53_zone.internal-dh-nerddays-demo.id
+  records = [module.aurora_mysql.this_rds_cluster_reader_endpoint]
+}
