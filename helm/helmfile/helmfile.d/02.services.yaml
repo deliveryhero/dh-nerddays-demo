@@ -1,0 +1,20 @@
+helmDefaults:
+  atomic: true
+  verify: false
+  wait: true
+  timeout: 1200
+  force: false
+  createNamespace: true
+
+repositories:
+- name: stable
+  url: https://kubernetes-charts.storage.googleapis.com
+
+releases:
+  - name: demo-service
+    namespace: default
+    chart: ../../charts/demo-service
+    values:
+      - "../values/demo-service.yaml"
+    secrets:
+      - "../secrets/demo-service.enc.yaml"

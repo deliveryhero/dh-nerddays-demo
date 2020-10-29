@@ -1,0 +1,11 @@
+image:
+  pullPolicy: Always
+  tag: "latest"
+
+ingress:
+  enabled: true
+  externalDNSTarget: gateway.dh-nerddays-demo.com
+  hosts:
+    - host: demo-service.dh-nerddays-demo.com
+      paths:
+        - "/"
