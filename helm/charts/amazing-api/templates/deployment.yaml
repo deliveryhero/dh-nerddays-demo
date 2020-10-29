@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "helm.labels" . | nindent 4 }}
 spec:
-{{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-{{- end }}
   selector:
     matchLabels:
       {{- include "helm.selectorLabels" . | nindent 6 }}
@@ -31,7 +29,7 @@ spec:
         - name: {{ .Chart.Name }}
           envFrom:
             - secretRef:
-                name: {{ include "helm.fullname"}}-secret
+                name: {{ include "helm.fullname" . }}-secret
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
