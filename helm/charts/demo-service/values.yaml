@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: idirouhab/amazing-api
+  repository: idirouhab/demo-service
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
