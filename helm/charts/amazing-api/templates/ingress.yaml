@@ -12,7 +12,7 @@ metadata:
   labels:
     {{- include "helm.labels" . | nindent 4 }}
   annotations:
-    external-dns.alpha.kubernetes.io/target: {{ .Values.ingress.annotations.externalDNSTarget }}
+    external-dns.alpha.kubernetes.io/target: {{ .Values.ingress.externalDNSTarget }}
     kubernetes.io/external-dns: "true"
   {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
