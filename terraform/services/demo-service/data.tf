@@ -1,6 +1,6 @@
 data "aws_availability_zones" "azs" {}
 
-data "aws_route53_zone" "dh-nerddays-demo" {
+data "aws_route53_zone" "internal-dh-nerddays-demo" {
   name         = "internal.dh-nerddays-demo.com"
   private_zone = true
 

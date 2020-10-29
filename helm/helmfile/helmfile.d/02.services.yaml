@@ -11,10 +11,10 @@ repositories:
   url: https://kubernetes-charts.storage.googleapis.com
 
 releases:
-  - name: amazing-api
+  - name: demo-service
     namespace: default
-    chart: ../../charts/amazing-api
+    chart: ../../charts/demo-service
     values:
-      - "../values/amazing-api.yaml"
+      - "../values/demo-service.yaml"
     secrets:
-      - "../secrets/amazing-api.enc.yaml"
+      - "../secrets/demo-service.enc.yaml"

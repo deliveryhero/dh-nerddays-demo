@@ -6,7 +6,7 @@ module "redis" {
   availability_zones         = data.aws_availability_zones.azs.names
   name                       = "demo-service"
   dns_subdomain              = "demo-service.redis"
-  zone_id                    = data.aws_route53_zone.dh-nerddays-demo.id
+  zone_id                    = data.aws_route53_zone.internal-dh-nerddays-demo.id
   vpc_id                     = data.aws_vpc.nerddays-demo.id
   allowed_cidr_blocks        = [data.aws_vpc.nerddays-demo.cidr_block]
   subnets                    = data.aws_subnet_ids.nerddays-demo-private.ids
