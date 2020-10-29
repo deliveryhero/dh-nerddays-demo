@@ -1,0 +1,6 @@
+ingress:
+  externalDNSTarget: gateway.dh-nerddays-demo.com
+  hosts:
+    - host: amazing-api.dh-nerddays-demo.com
+      paths:
+        - "/"

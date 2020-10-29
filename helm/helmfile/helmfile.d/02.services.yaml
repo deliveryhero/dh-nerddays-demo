@@ -1,0 +1,20 @@
+helmDefaults:
+  atomic: true
+  verify: false
+  wait: true
+  timeout: 1200
+  force: false
+  createNamespace: true
+
+repositories:
+- name: stable
+  url: https://kubernetes-charts.storage.googleapis.com
+
+releases:
+  - name: amazing-api
+    namespace: default
+    chart: ../../charts/amazing-api
+    values:
+      - "../values/amazing-api.yaml"
+    secrets:
+      - "../secrets/amazing-api.enc.yaml"

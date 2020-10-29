@@ -11,8 +11,10 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "helm.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
+    external-dns.alpha.kubernetes.io/target: {{ .Values.ingress.annotations.externalDNSTarget }}
+    kubernetes.io/external-dns: "true"
+  {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
