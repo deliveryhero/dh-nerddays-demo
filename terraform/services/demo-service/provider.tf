@@ -8,6 +8,17 @@ terraform {
     region  = "eu-central-1"
     profile = "dh-nerddays-demo"
   }
+
+  required_providers {
+    sops = {
+      source  = "carlpett/sops"
+      version = "0.5.2"
+    }
+    mysql = {
+      source  = "terraform-providers/mysql"
+      version = "1.9.0"
+    }
+  }
 }
 
 provider "aws" {
