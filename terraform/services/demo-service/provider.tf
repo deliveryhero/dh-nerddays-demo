@@ -14,3 +14,11 @@ provider "aws" {
   profile = "dh-nerddays-demo"
   region  = "eu-central-1"
 }
+
+provider "sops" {}
+
+provider "mysql" {
+  endpoint = local.mysql_provider.endpoint
+  username = local.mysql_provider.username
+  password = local.mysql_provider.password
+}
